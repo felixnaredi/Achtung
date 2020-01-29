@@ -1,6 +1,9 @@
 package chalmers.dat055.achtung;
 
+import chalmers.dat055.achtung.Curve;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -8,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -21,11 +23,9 @@ public class App extends Application {
     AtomicBoolean windowVisible = new AtomicBoolean();
     Group pane = new Group();
 
-    Polyline p = new Polyline();
-    p.strokeProperty().set(Color.RED);
-    p.setStrokeWidth(4);
-
-    pane.getChildren().add(p);
+    Curve curve = new Curve(Color.RED);
+    curve.setPosition(50, 50);
+    curve.setSpeed(0.6);
 
     Scene scene = new Scene(pane, 400, 400);
     scene.fillProperty().set(Color.AQUA);
@@ -35,14 +35,10 @@ public class App extends Application {
     stage.show();
     windowVisible.set(true);
 
-    double[] pitch = {0.0};
-
     scene.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> keyPressed = e.getCode());
     scene.addEventHandler(KeyEvent.KEY_RELEASED, (e) -> keyPressed = null);
 
     runLoop = new Thread(() -> {
-      double x = 0;
-      double y = 0;
       while (windowVisible.get()) {
         try {
           Thread.sleep(16);
@@ -52,19 +48,18 @@ public class App extends Application {
 
         if (keyPressed != null) {
           if (keyPressed.equals(KeyCode.A)) {
-            pitch[0] += 6.981317007977318e-2;
+            curve.addPitch(0.06981317007977318);
           } else if (keyPressed.equals(KeyCode.S)) {
-            pitch[0] -= 6.981317007977318e-2;
+            curve.addPitch(-0.06981317007977318);
           }
         }
 
-        x += Math.cos(pitch[0]) * 0.5;
-        y += Math.sin(pitch[0]) * 0.5;
+        curve.update();
 
-        final double newX = x;
-        final double newY = y;
-
-        Platform.runLater(() -> p.getPoints().addAll(newX, newY));
+        Platform.runLater(() -> {
+          pane.getChildren().clear();
+          pane.getChildren().setAll(curve.getPolylines().collect(Collectors.toList()));
+        });
       }
     });
 
