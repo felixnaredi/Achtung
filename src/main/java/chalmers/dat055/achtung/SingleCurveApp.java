@@ -11,9 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class App extends Application {
-  private Thread runLoop;
-
+public class SingleCurveApp extends Application {
   @Override
   public void start(Stage stage) {
     AtomicBoolean windowVisible = new AtomicBoolean();
@@ -24,7 +22,7 @@ public class App extends Application {
     curve.setSpeed(0.6);
 
     Scene scene = new Scene(pane, 400, 400);
-    scene.fillProperty().set(Color.color(0.05, 0.01, 0.01, 1.0));
+    scene.fillProperty().set(Color.color(0.15, 0.15, 0.15, 1.0));
 
     KeyServer keyServer = new KeyServer(scene);
     keyServer.addHoldListener(KeyCode.A, (n) -> curve.addPitch(0.06981317007977318));
@@ -35,7 +33,7 @@ public class App extends Application {
     stage.show();
     windowVisible.set(true);
 
-    runLoop = new Thread(() -> {
+    Thread runLoop = new Thread(() -> {
       while (windowVisible.get()) {
         try {
           Thread.sleep(16);

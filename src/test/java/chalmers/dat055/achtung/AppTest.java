@@ -4,7 +4,6 @@
 package chalmers.dat055.achtung;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class AppTest {
 

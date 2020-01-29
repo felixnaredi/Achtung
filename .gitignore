@@ -9,3 +9,4 @@ bin
 # Ignore vscode generated
 .vscode
 .project
+.classpath
