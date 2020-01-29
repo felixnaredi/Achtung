@@ -58,7 +58,7 @@ class Curve {
       mTrackingEnabled = !mTrackingEnabled;
     }
 
-    if (mTrackingEnabled) {      
+    if (mTrackingEnabled) {
       mPoints.peek().push(mX);
       mPoints.peek().push(mY);
     } else {
