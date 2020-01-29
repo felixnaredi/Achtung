@@ -17,6 +17,7 @@ class PolylineCurve implements Curve {
   private Stack<Stack<Double>> mPoints;
   private boolean mTrackingEnabled;
   private int mTrackingToggle;
+  private int mStrokeWidth;
 
   public PolylineCurve(Paint color) {
     mColor = color;
@@ -24,6 +25,7 @@ class PolylineCurve implements Curve {
     mPitch = 0;
     mX = 0;
     mY = 0;
+    mStrokeWidth = 4;
     mPoints = new Stack<>();
     mTrackingEnabled = true;
     mTrackingToggle = 100;
@@ -88,7 +90,7 @@ class PolylineCurve implements Curve {
     return mPoints.stream().map((stack) -> {
       Polyline p = new Polyline();
       p.setStroke(mColor);
-      p.setStrokeWidth(4);
+      p.setStrokeWidth(mStrokeWidth);
       p.getPoints().addAll(stack);
       return p;
     });
@@ -97,5 +99,10 @@ class PolylineCurve implements Curve {
   @Override
   public void draw(Group group) {
     group.getChildren().addAll(getPolylines().collect(Collectors.toList()));
+  }
+
+  @Override
+  public void setStrokeWidth(int width) {
+    mStrokeWidth = width;
   }
 }

@@ -6,6 +6,7 @@ interface Curve {
   public void addPitch(double rad);
   public void setPosition(double x, double y);
   public void setSpeed(double speed);
+  public void setStrokeWidth(int width);
   public void update();
   public void draw(Group group);
 }

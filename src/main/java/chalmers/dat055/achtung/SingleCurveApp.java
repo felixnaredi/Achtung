@@ -1,6 +1,7 @@
 package chalmers.dat055.achtung;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -19,6 +20,7 @@ public class SingleCurveApp extends Application {
     Curve curve = new BitmapCurve(Color.RED, 400, 400);
     curve.setPosition(50, 50);
     curve.setSpeed(0.7);
+    curve.setStrokeWidth(7);
 
     Scene scene = new Scene(root, 400, 400);
     scene.fillProperty().set(Color.color(0.15, 0.15, 0.15, 1.0));

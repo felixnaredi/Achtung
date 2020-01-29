@@ -13,11 +13,10 @@ class BitmapCurve implements Curve {
   private double mPitch;
   private double mX;
   private double mY;
-  private Canvas mBodyCanvas;
+  private Canvas mTailCanvas;
   private Canvas mHeadCanvas;
-  private WritableImage mImage;
+  private WritableImage mHeadImage;
   private int mStrokeWidth;
-  private int mStrokeHeight;
   private boolean mTrackingEnabled;
   private int mTrackingToggle;
 
@@ -25,14 +24,13 @@ class BitmapCurve implements Curve {
     mTrackingEnabled = true;
     mTrackingToggle = 100;
 
-    mBodyCanvas = new Canvas(width, height);
+    mTailCanvas = new Canvas(width, height);
     mHeadCanvas = new Canvas(8, 8);
 
-    mImage = new WritableImage(12, 12);
+    mHeadImage = new WritableImage(12, 12);
     mStrokeWidth = 5;
-    mStrokeHeight = 5;
 
-    PixelWriter writer = mImage.getPixelWriter();
+    PixelWriter writer = mHeadImage.getPixelWriter();
     Color color = (Color)paint;
 
     for (int x = 0; x < 12; ++x) {
@@ -45,9 +43,12 @@ class BitmapCurve implements Curve {
     }
   }
 
-  public void setStrokeSize(int width, int height) {
+  @Override
+  public void setStrokeWidth(int width) {
+    if (width > mHeadCanvas.getWidth()) {
+      mHeadCanvas = new Canvas(width * 2, width * 2);
+    }
     mStrokeWidth = width;
-    mStrokeHeight = height;
   }
 
   @Override
@@ -82,14 +83,15 @@ class BitmapCurve implements Curve {
     GraphicsContext headCtx = mHeadCanvas.getGraphicsContext2D();
     mHeadCanvas.relocate(mX, mY);
     headCtx.clearRect(0, 0, mHeadCanvas.getWidth(), mHeadCanvas.getHeight());
-    headCtx.drawImage(mImage, 0, 0, 12, 12, 0, 0, mStrokeWidth, mStrokeHeight);
+    headCtx.drawImage(mHeadImage, 0, 0, 12, 12, 0, 0, mStrokeWidth, mStrokeWidth);
 
     if (mTrackingEnabled) {
-      mBodyCanvas.getGraphicsContext2D().drawImage(
-          mImage, 0, 0, 12, 12, mX, mY, mStrokeWidth, mStrokeHeight);
+
+      mTailCanvas.getGraphicsContext2D().drawImage(
+          mHeadImage, 0, 0, 12, 12, mX, mY, mStrokeWidth, mStrokeWidth);
     }
 
-    group.getChildren().add(mBodyCanvas);
     group.getChildren().add(mHeadCanvas);
+    group.getChildren().add(mTailCanvas);
   }
 }
