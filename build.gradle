@@ -38,4 +38,4 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'chalmers.dat055.achtung.ImageApp'
+mainClassName = 'chalmers.dat055.achtung.SingleCurveApp'

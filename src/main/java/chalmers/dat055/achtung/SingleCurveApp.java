@@ -1,7 +1,6 @@
 package chalmers.dat055.achtung;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -15,13 +14,13 @@ public class SingleCurveApp extends Application {
   @Override
   public void start(Stage stage) {
     AtomicBoolean windowVisible = new AtomicBoolean();
-    Group pane = new Group();
+    Group root = new Group();
 
-    Curve curve = new Curve(Color.RED);
+    Curve curve = new PolylineCurve(Color.RED);
     curve.setPosition(50, 50);
     curve.setSpeed(0.6);
 
-    Scene scene = new Scene(pane, 400, 400);
+    Scene scene = new Scene(root, 400, 400);
     scene.fillProperty().set(Color.color(0.15, 0.15, 0.15, 1.0));
 
     KeyServer keyServer = new KeyServer(scene);
@@ -45,8 +44,8 @@ public class SingleCurveApp extends Application {
         curve.update();
 
         Platform.runLater(() -> {
-          pane.getChildren().clear();
-          pane.getChildren().setAll(curve.getPolylines().collect(Collectors.toList()));
+          root.getChildren().clear();
+          curve.draw(root);
         });
       }
     });
