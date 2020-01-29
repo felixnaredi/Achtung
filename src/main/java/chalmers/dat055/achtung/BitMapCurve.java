@@ -86,7 +86,6 @@ class BitmapCurve implements Curve {
     headCtx.drawImage(mHeadImage, 0, 0, 12, 12, 0, 0, mStrokeWidth, mStrokeWidth);
 
     if (mTrackingEnabled) {
-
       mTailCanvas.getGraphicsContext2D().drawImage(
           mHeadImage, 0, 0, 12, 12, mX, mY, mStrokeWidth, mStrokeWidth);
     }
