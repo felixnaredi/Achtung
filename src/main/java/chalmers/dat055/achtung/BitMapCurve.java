@@ -8,11 +8,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-class BitmapCurve implements Curve {
-  private double mSpeed;
-  private double mPitch;
-  private double mX;
-  private double mY;
+class BitmapCurve extends CurveBase {
+  private static final int HEAD_IMAGE_WIDTH = 12;
+
   private Canvas mTailCanvas;
   private Canvas mHeadCanvas;
   private WritableImage mHeadImage;
@@ -33,9 +31,10 @@ class BitmapCurve implements Curve {
     PixelWriter writer = mHeadImage.getPixelWriter();
     Color color = (Color)paint;
 
-    for (int x = 0; x < 12; ++x) {
-      for (int y = 0; y < 12; ++y) {
-        int d = (x - 6) * (x - 6) + (y - 6) * (y - 6);
+    for (int x = 0; x < HEAD_IMAGE_WIDTH; ++x) {
+      for (int y = 0; y < HEAD_IMAGE_WIDTH; ++y) {
+        int d = (x - (HEAD_IMAGE_WIDTH / 2)) * (x - (HEAD_IMAGE_WIDTH / 2)) +
+                (y - (HEAD_IMAGE_WIDTH / 2)) * (y - (HEAD_IMAGE_WIDTH / 2));
         if (d < 25) {
           writer.setColor(x, y, color);
         }
@@ -52,25 +51,8 @@ class BitmapCurve implements Curve {
   }
 
   @Override
-  public void addPitch(double rad) {
-    mPitch += rad;
-  }
-
-  @Override
-  public void setPosition(double x, double y) {
-    mX = x;
-    mY = y;
-  }
-
-  @Override
-  public void setSpeed(double speed) {
-    mSpeed = speed;
-  }
-
-  @Override
   public void update() {
-    mX += Math.cos(mPitch) * mSpeed;
-    mY += Math.sin(mPitch) * mSpeed;
+    super.update();
 
     if (--mTrackingToggle < 0) {
       mTrackingToggle = mTrackingEnabled ? 17 : 100;
@@ -80,14 +62,18 @@ class BitmapCurve implements Curve {
 
   @Override
   public void draw(Group group) {
+    double x = getPosX();
+    double y = getPosY();
+
     GraphicsContext headCtx = mHeadCanvas.getGraphicsContext2D();
-    mHeadCanvas.relocate(mX, mY);
+    mHeadCanvas.relocate(x, y);
     headCtx.clearRect(0, 0, mHeadCanvas.getWidth(), mHeadCanvas.getHeight());
-    headCtx.drawImage(mHeadImage, 0, 0, 12, 12, 0, 0, mStrokeWidth, mStrokeWidth);
+    headCtx.drawImage(
+        mHeadImage, 0, 0, HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH, 0, 0, mStrokeWidth, mStrokeWidth);
 
     if (mTrackingEnabled) {
       mTailCanvas.getGraphicsContext2D().drawImage(
-          mHeadImage, 0, 0, 12, 12, mX, mY, mStrokeWidth, mStrokeWidth);
+          mHeadImage, 0, 0, HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH, x, y, mStrokeWidth, mStrokeWidth);
     }
 
     group.getChildren().add(mHeadCanvas);

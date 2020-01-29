@@ -8,11 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 
-class PolylineCurve implements Curve {
-  private double mSpeed;
-  private double mPitch;
-  private double mX;
-  private double mY;
+class PolylineCurve extends CurveBase {
   private Paint mColor;
   private Stack<Stack<Double>> mPoints;
   private boolean mTrackingEnabled;
@@ -21,10 +17,6 @@ class PolylineCurve implements Curve {
 
   public PolylineCurve(Paint color) {
     mColor = color;
-    mSpeed = 1;
-    mPitch = 0;
-    mX = 0;
-    mY = 0;
     mStrokeWidth = 4;
     mPoints = new Stack<>();
     mTrackingEnabled = true;
@@ -32,14 +24,9 @@ class PolylineCurve implements Curve {
   }
 
   @Override
-  public void setSpeed(double newValue) {
-    mSpeed = newValue;
-  }
-
-  @Override
   public void setPosition(double x, double y) {
-    mX = x;
-    mY = y;
+    super.setPosition(x, y);
+
     Stack<Double> s = new Stack<>();
     s.push(x);
     s.push(y);
@@ -47,42 +34,39 @@ class PolylineCurve implements Curve {
   }
 
   @Override
-  public void addPitch(double rad) {
-    mPitch += rad;
-  }
-
-  @Override
   public void update() {
-    mX += Math.cos(mPitch) * mSpeed;
-    mY += Math.sin(mPitch) * mSpeed;
+    super.update();
+
+    double x = getPosX();
+    double y = getPosY();
 
     if (--mTrackingToggle < 0) {
       if (mTrackingEnabled) {
         mTrackingToggle = 17;
         Stack<Double> s = new Stack<>();
-        s.push(mX);
-        s.push(mY);
+        s.push(x);
+        s.push(y);
         mPoints.push(s);
       } else {
         mTrackingToggle = 100;
         mPoints.pop();
-        setPosition(mX, mY);
+        setPosition(x, y);
       }
       mTrackingEnabled = !mTrackingEnabled;
     }
 
     if (mTrackingEnabled) {
-      mPoints.peek().push(mX);
-      mPoints.peek().push(mY);
+      mPoints.peek().push(x);
+      mPoints.peek().push(y);
     } else {
       Stack<Double> s = mPoints.peek();
-      double y = s.pop();
-      double x = s.pop();
+      double oldY = s.pop();
+      double oldX = s.pop();
       s.clear();
+      s.push(oldX);
+      s.push(oldY);
       s.push(x);
       s.push(y);
-      s.push(mX);
-      s.push(mY);
     }
   }
 
