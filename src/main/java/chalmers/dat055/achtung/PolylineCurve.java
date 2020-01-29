@@ -3,6 +3,7 @@ package chalmers.dat055.achtung;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
@@ -28,8 +29,12 @@ class PolylineCurve implements Curve {
     mTrackingToggle = 100;
   }
 
-  public void setSpeed(double newValue) { mSpeed = newValue; }
+  @Override
+  public void setSpeed(double newValue) {
+    mSpeed = newValue;
+  }
 
+  @Override
   public void setPosition(double x, double y) {
     mX = x;
     mY = y;
@@ -39,8 +44,12 @@ class PolylineCurve implements Curve {
     mPoints.push(s);
   }
 
-  public void addPitch(double rad) { mPitch += rad; }
+  @Override
+  public void addPitch(double rad) {
+    mPitch += rad;
+  }
 
+  @Override
   public void update() {
     mX += Math.cos(mPitch) * mSpeed;
     mY += Math.sin(mPitch) * mSpeed;
@@ -85,6 +94,7 @@ class PolylineCurve implements Curve {
     });
   }
 
+  @Override
   public void draw(Group group) {
     group.getChildren().addAll(getPolylines().collect(Collectors.toList()));
   }

@@ -1,6 +1,7 @@
 package chalmers.dat055.achtung;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;

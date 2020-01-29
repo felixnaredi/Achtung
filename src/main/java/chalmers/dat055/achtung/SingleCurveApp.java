@@ -16,9 +16,9 @@ public class SingleCurveApp extends Application {
     AtomicBoolean windowVisible = new AtomicBoolean();
     Group root = new Group();
 
-    Curve curve = new PolylineCurve(Color.RED);
+    Curve curve = new BitmapCurve(Color.RED, 400, 400);
     curve.setPosition(50, 50);
-    curve.setSpeed(0.6);
+    curve.setSpeed(0.7);
 
     Scene scene = new Scene(root, 400, 400);
     scene.fillProperty().set(Color.color(0.15, 0.15, 0.15, 1.0));
