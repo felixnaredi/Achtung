@@ -1,10 +1,10 @@
 package chalmers.dat055.achtung;
 
-import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -18,9 +18,9 @@ class BitmapCurve extends CurveBase {
 
   public BitmapCurve(Paint paint, int width, int height) {
     mTailCanvas = new Canvas(width, height);
-    mHeadCanvas = new Canvas(8, 8);
+    mHeadCanvas = new Canvas(HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH);
 
-    mHeadImage = new WritableImage(12, 12);
+    mHeadImage = new WritableImage(HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH);
     mStrokeWidth = 5;
 
     PixelWriter writer = mHeadImage.getPixelWriter();
@@ -54,7 +54,7 @@ class BitmapCurve extends CurveBase {
   }
 
   @Override
-  public void draw(Group group) {
+  public void draw(Pane pane) {
     double x = getPosX();
     double y = getPosY();
 
@@ -69,7 +69,7 @@ class BitmapCurve extends CurveBase {
           mHeadImage, 0, 0, HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH, x, y, mStrokeWidth, mStrokeWidth);
     }
 
-    group.getChildren().add(mHeadCanvas);
-    group.getChildren().add(mTailCanvas);
+    pane.getChildren().add(mHeadCanvas);
+    pane.getChildren().add(mTailCanvas);
   }
 }

@@ -4,9 +4,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -15,7 +15,7 @@ public class SingleCurveApp extends Application {
   @Override
   public void start(Stage stage) {
     AtomicBoolean windowVisible = new AtomicBoolean();
-    Group root = new Group();
+    Pane root = new Pane();
 
     Curve curve = new BitmapCurve(Color.RED, 400, 400);
     curve.setPosition(50, 50);

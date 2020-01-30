@@ -4,7 +4,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 
@@ -78,8 +78,8 @@ class PolylineCurve extends CurveBase {
   }
 
   @Override
-  public void draw(Group group) {
-    group.getChildren().addAll(getPolylines().collect(Collectors.toList()));
+  public void draw(Pane pane) {
+    pane.getChildren().addAll(getPolylines().collect(Collectors.toList()));
   }
 
   @Override
