@@ -15,13 +15,8 @@ class BitmapCurve extends CurveBase {
   private Canvas mHeadCanvas;
   private WritableImage mHeadImage;
   private int mStrokeWidth;
-  private boolean mTrackingEnabled;
-  private int mTrackingToggle;
 
   public BitmapCurve(Paint paint, int width, int height) {
-    mTrackingEnabled = true;
-    mTrackingToggle = 100;
-
     mTailCanvas = new Canvas(width, height);
     mHeadCanvas = new Canvas(8, 8);
 
@@ -40,6 +35,14 @@ class BitmapCurve extends CurveBase {
         }
       }
     }
+
+    setTrackingToggler(new CountToggler(true, 100, 17) {
+      @Override
+      public void onToggleSet() {}
+
+      @Override
+      public void onToggleClear() {}
+    });
   }
 
   @Override
@@ -48,16 +51,6 @@ class BitmapCurve extends CurveBase {
       mHeadCanvas = new Canvas(width * 2, width * 2);
     }
     mStrokeWidth = width;
-  }
-
-  @Override
-  public void update() {
-    super.update();
-
-    if (--mTrackingToggle < 0) {
-      mTrackingToggle = mTrackingEnabled ? 17 : 100;
-      mTrackingEnabled = !mTrackingEnabled;
-    }
   }
 
   @Override
@@ -71,7 +64,7 @@ class BitmapCurve extends CurveBase {
     headCtx.drawImage(
         mHeadImage, 0, 0, HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH, 0, 0, mStrokeWidth, mStrokeWidth);
 
-    if (mTrackingEnabled) {
+    if (getTrackingEnabled()) {
       mTailCanvas.getGraphicsContext2D().drawImage(
           mHeadImage, 0, 0, HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH, x, y, mStrokeWidth, mStrokeWidth);
     }

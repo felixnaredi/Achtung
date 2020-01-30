@@ -11,16 +11,28 @@ import javafx.scene.shape.Polyline;
 class PolylineCurve extends CurveBase {
   private Paint mColor;
   private Stack<Stack<Double>> mPoints;
-  private boolean mTrackingEnabled;
-  private int mTrackingToggle;
   private int mStrokeWidth;
 
   public PolylineCurve(Paint color) {
     mColor = color;
     mStrokeWidth = 4;
     mPoints = new Stack<>();
-    mTrackingEnabled = true;
-    mTrackingToggle = 100;
+
+    setTrackingToggler(new CountToggler(true, 100, 17) {
+      @Override
+      public void onToggleSet() {
+        mPoints.pop();
+        setPosition(getPosX(), getPosY());
+      }
+
+      @Override
+      public void onToggleClear() {
+        Stack<Double> s = new Stack<>();
+        s.push(getPosX());
+        s.push(getPosY());
+        mPoints.push(s);
+      }
+    });
   }
 
   @Override
@@ -40,22 +52,7 @@ class PolylineCurve extends CurveBase {
     double x = getPosX();
     double y = getPosY();
 
-    if (--mTrackingToggle < 0) {
-      if (mTrackingEnabled) {
-        mTrackingToggle = 17;
-        Stack<Double> s = new Stack<>();
-        s.push(x);
-        s.push(y);
-        mPoints.push(s);
-      } else {
-        mTrackingToggle = 100;
-        mPoints.pop();
-        setPosition(x, y);
-      }
-      mTrackingEnabled = !mTrackingEnabled;
-    }
-
-    if (mTrackingEnabled) {
+    if (getTrackingEnabled()) {
       mPoints.peek().push(x);
       mPoints.peek().push(y);
     } else {

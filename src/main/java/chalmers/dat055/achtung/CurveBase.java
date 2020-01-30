@@ -5,11 +5,14 @@ public abstract class CurveBase implements Curve {
   private double mY;
   private double mSpeed;
   private double mPitch;
+  private Toggler mTrackingToggler;
 
   public double getPitch() { return mPitch; }
   public double getPosX() { return mX; }
   public double getPosY() { return mY; }
   public void setSpeed(double newValue) { mSpeed = newValue; }
+  public void setTrackingToggler(Toggler toggler) { mTrackingToggler = toggler; }
+  public boolean getTrackingEnabled() { return mTrackingToggler.getToggleState(); }
 
   @Override
   public void addPitch(double rad) {
@@ -26,5 +29,6 @@ public abstract class CurveBase implements Curve {
   public void update() {
     mX += Math.cos(mPitch) * mSpeed;
     mY += Math.sin(mPitch) * mSpeed;
+    mTrackingToggler.update();
   }
 }
