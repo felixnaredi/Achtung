@@ -17,11 +17,12 @@ class BitmapCurve extends CurveBase {
   private int mStrokeWidth;
 
   public BitmapCurve(Paint paint, int width, int height) {
+    mStrokeWidth = Curve.defaultStrokeWidth();
+
     mTailCanvas = new Canvas(width, height);
     mHeadCanvas = new Canvas(HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH);
 
     mHeadImage = new WritableImage(HEAD_IMAGE_WIDTH, HEAD_IMAGE_WIDTH);
-    mStrokeWidth = 5;
 
     PixelWriter writer = mHeadImage.getPixelWriter();
     Color color = (Color)paint;

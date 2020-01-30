@@ -14,8 +14,9 @@ class PolylineCurve extends CurveBase {
   private int mStrokeWidth;
 
   public PolylineCurve(Paint color) {
+    mStrokeWidth = Curve.defaultStrokeWidth();
+
     mColor = color;
-    mStrokeWidth = 4;
     mPoints = new Stack<>();
 
     setTrackingToggler(new CountToggler(true, 100, 17) {
@@ -40,8 +41,6 @@ class PolylineCurve extends CurveBase {
     super.setPosition(x, y);
 
     Stack<Double> s = new Stack<>();
-    s.push(x);
-    s.push(y);
     mPoints.push(s);
   }
 
@@ -51,12 +50,12 @@ class PolylineCurve extends CurveBase {
 
     double x = getPosX();
     double y = getPosY();
+    Stack<Double> s = mPoints.peek();
 
     if (getTrackingEnabled()) {
-      mPoints.peek().push(x);
-      mPoints.peek().push(y);
+      s.push(x);
+      s.push(y);
     } else {
-      Stack<Double> s = mPoints.peek();
       double oldY = s.pop();
       double oldX = s.pop();
       s.clear();

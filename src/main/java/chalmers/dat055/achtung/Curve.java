@@ -5,4 +5,6 @@ interface Curve extends Actor {
   public void setPosition(double x, double y);
   public void setSpeed(double speed);
   public void setStrokeWidth(int width);
+
+  public static int defaultStrokeWidth() { return 5; }
 }
