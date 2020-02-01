@@ -58,12 +58,12 @@ public class MenuApp extends Application {
     menuBox.setAlignment(Pos.CENTER);
 
     scene.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
-      // Curve curve = new BitmapCurve(
-      //     Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
-      Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
+      Curve curve = new BitmapCurve(
+          Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
+      // Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
       curve.setPosition(e.getX(), e.getY());
       curve.setSpeed(0.81);
-      curve.setStrokeWidth(7);
+      curve.setStrokeWidth(4);
 
       activeCurves.add(curve);
     });
