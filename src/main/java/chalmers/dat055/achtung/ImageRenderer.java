@@ -23,4 +23,17 @@ class ImageRenderer {
 
     return img;
   }
+
+  public static Image fromCanvas(Canvas canvas) {
+    int width = (int) canvas.getWidth();
+    int height = (int) canvas.getHeight();
+    
+    Scene scene = new Scene(new StackPane(canvas), width, height);
+    scene.fillProperty().set(Color.color(0, 0, 0, 0));
+
+    WritableImage img = new WritableImage(width, height);
+    canvas.snapshot(null, img);
+
+    return img;
+  }
 }

@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 class BitmapCurve extends CurveBase {
@@ -43,6 +44,8 @@ class BitmapCurve extends CurveBase {
     double x = getPosX();
     double y = getPosY();
 
+    System.out.println(containsPixel(getToungeX(), getToungeY()));
+
     GraphicsContext headCtx = mHeadCanvas.getGraphicsContext2D();
     mHeadCanvas.relocate(x, y);
     headCtx.clearRect(0, 0, mHeadCanvas.getWidth(), mHeadCanvas.getHeight());
@@ -57,4 +60,12 @@ class BitmapCurve extends CurveBase {
     pane.getChildren().add(mTailCanvas);
     pane.getChildren().add(mHeadCanvas);
   }
+
+  public boolean containsPixel(double x, double y) {
+    Image img = ImageRenderer.fromCanvas(mTailCanvas);
+    return !img.getPixelReader().getColor((int)x, (int)y).equals(Color.color(0, 0, 0, 0));
+  }
+
+  public double getToungeX() { return getPosX() + Math.cos(getPitch()) * mStrokeWidth; }
+  public double getToungeY() { return getPosY() + Math.sin(getPitch()) * mStrokeWidth; }
 }

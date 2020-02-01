@@ -63,7 +63,7 @@ public class MenuApp extends Application {
       // Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
       curve.setPosition(e.getX(), e.getY());
       curve.setSpeed(0.81);
-      curve.setStrokeWidth(4);
+      curve.setStrokeWidth(8);
 
       activeCurves.add(curve);
     });
