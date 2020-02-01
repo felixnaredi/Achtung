@@ -29,6 +29,9 @@ public abstract class CurveBase implements Curve {
   public void update() {
     mX += Math.cos(mPitch) * mSpeed;
     mY += Math.sin(mPitch) * mSpeed;
-    mTrackingToggler.update();
+    
+    if (mTrackingToggler != null) {
+      mTrackingToggler.update();
+    }
   }
 }

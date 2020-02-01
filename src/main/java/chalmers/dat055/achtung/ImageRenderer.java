@@ -27,12 +27,16 @@ class ImageRenderer {
   public static Image fromCanvas(Canvas canvas) {
     int width = (int) canvas.getWidth();
     int height = (int) canvas.getHeight();
+    double x = canvas.getLayoutX();
+    double y = canvas.getLayoutY();
     
     Scene scene = new Scene(new StackPane(canvas), width, height);
     scene.fillProperty().set(Color.color(0, 0, 0, 0));
 
     WritableImage img = new WritableImage(width, height);
     canvas.snapshot(null, img);
+
+    canvas.relocate(x, y);
 
     return img;
   }

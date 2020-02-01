@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 /**
  * The mane region of a bitmap curve is a region from the head to a given length of images that no
  * one can collide with.
- * 
+ *
  * <p> TODO: This class should be hidden from the user and only really interact in a symbiotic way
  * with the class {@code BitmapCurve}.
  */
@@ -42,7 +42,7 @@ abstract class BitmapCurveMane extends CurveBase {
     });
   }
 
-  private int getStrokeWidth() { return (int)mCanvasNeck.getFirst().getWidth(); }
+  public int getStrokeWidth() { return (int)mCanvasNeck.getFirst().getWidth(); }
 
   @Override
   public void setPosition(double x, double y) {
@@ -54,7 +54,7 @@ abstract class BitmapCurveMane extends CurveBase {
   public void update() {
     super.update();
 
-    int w = getStrokeWidth();
+    int strokeWidth = getStrokeWidth();
 
     if (!getTrackingEnabled()) {
       mCanvasNeck.removeFirst();
@@ -64,8 +64,9 @@ abstract class BitmapCurveMane extends CurveBase {
     Canvas c = mCanvasNeck.removeLast();
 
     if (c == null) {
-      c = new Canvas(w, w);
-      c.getGraphicsContext2D().drawImage(mHeadImage, 0, 0, w, w, 0, 0, w, w);
+      c = new Canvas(strokeWidth, strokeWidth);
+      c.getGraphicsContext2D().drawImage(
+          mHeadImage, 0, 0, strokeWidth, strokeWidth, 0, 0, strokeWidth, strokeWidth);
     }
     mCanvasNeck.addFirst(c);
     c.relocate(getPosX(), getPosY());
@@ -75,28 +76,29 @@ abstract class BitmapCurveMane extends CurveBase {
   public void setStrokeWidth(int width) {
     mHeadImage = makeHeadImage(width);
 
-    mCanvasNeck = new LinkedList<Canvas>(mCanvasNeck.stream().map((c) -> {
-      if (c == null) {
-        return null;
-      }
-      Canvas r = new Canvas(width, width);
-      r.relocate(c.getLayoutX(), c.getLayoutY());
-      r.getGraphicsContext2D().drawImage(mHeadImage, 0, 0, width, width, 0, 0, width, width);
-      return r;
-    }).collect(Collectors.toList()));
+    mCanvasNeck =
+        new LinkedList<Canvas>(mCanvasNeck.stream()
+                                   .map((c) -> {
+                                     if (c == null) {
+                                       return null;
+                                     }
+                                     Canvas r = new Canvas(width, width);
+                                     r.relocate(c.getLayoutX(), c.getLayoutY());
+                                     r.getGraphicsContext2D().drawImage(
+                                         mHeadImage, 0, 0, width, width, 0, 0, width, width);
+                                     return r;
+                                   })
+                                   .collect(Collectors.toList()));
   }
 
   @Override
   public void draw(Pane pane) {
-    mCanvasNeck.forEach((c) -> {
-      if (c == null) {
-        return;
-      }
-      pane.getChildren().add(c);
-    });
+    mCanvasNeck.stream().filter((c) -> c != null).forEach(pane.getChildren()::add);
   }
 
-  public Canvas getLast() { return mCanvasNeck.getLast(); }
+  public Canvas getLast() { 
+    return mCanvasNeck.getLast(); 
+  }
 
   public double getToungeX() {
     double radius = getStrokeWidth() / 2;

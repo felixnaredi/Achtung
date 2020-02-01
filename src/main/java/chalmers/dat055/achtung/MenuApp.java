@@ -63,7 +63,7 @@ public class MenuApp extends Application {
       //     Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
       // Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
 
-      Curve curve = new BitmapCurveMane(100) {
+      Curve curve = new BitmapCurve(scene.getWidth(), scene.getHeight()) {
         @Override
         public Image makeHeadImage(int width) {
           return ImageRenderer.drawImage(width, width, (g) -> {
