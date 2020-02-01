@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -58,12 +59,23 @@ public class MenuApp extends Application {
     menuBox.setAlignment(Pos.CENTER);
 
     scene.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
-      Curve curve = new BitmapCurve(
-          Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
+      // Curve curve = new BitmapCurve(
+      //     Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
       // Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
+
+      Curve curve = new BitmapCurveMane(100) {
+        @Override
+        public Image makeHeadImage(int width) {
+          return ImageRenderer.drawImage(width, width, (g) -> {
+            g.setFill(Color.BURLYWOOD);
+            g.fillOval(0, 0, width, width);
+          });
+        }
+      };
+
       curve.setPosition(e.getX(), e.getY());
       curve.setSpeed(0.81);
-      curve.setStrokeWidth(8);
+      curve.setStrokeWidth(9);
 
       activeCurves.add(curve);
     });
