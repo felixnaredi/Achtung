@@ -1,4 +1,4 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+import chalmers.dat055.achtung.ImageRenderer;
+import chalmers.dat055.achtung.KeyServer;
+import chalmers.dat055.achtung.curve.BitmapCurve;
+import chalmers.dat055.achtung.curve.Curve;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -103,24 +107,18 @@ public class MenuApp extends Application {
     stage.setScene(scene);
     stage.show();
 
-    new Thread(() -> {
-      while (!windowWillClose.get()) {
-        try {
-          Thread.sleep(16);
-        } catch (Exception exception) {
-          exception.printStackTrace();
-        }
+    new AnimationTimer() {
+      @Override
+      public void handle(long now) {
         keyServer.poll();
 
-        Platform.runLater(() -> {
-          drawPane.getChildren().clear();
-          for (Curve curve : activeCurves) {
-            curve.update();
-            curve.draw(drawPane);
-          }
+        drawPane.getChildren().clear();
+        activeCurves.forEach((c) -> {
+          c.update();
+          c.draw(drawPane);
         });
       }
-    }).start();
+    }.start();
   }
 
   public static void main(String[] args) { launch(); }

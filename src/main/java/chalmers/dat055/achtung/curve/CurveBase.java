@@ -1,6 +1,8 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.curve;
 
-public abstract class CurveBase implements Curve {
+import chalmers.dat055.achtung.Toggler;
+
+abstract class CurveBase implements Curve {
   private double mX;
   private double mY;
   private double mSpeed;

@@ -1,10 +1,11 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.curve;
 
+import chalmers.dat055.achtung.ImageRenderer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-abstract class BitmapCurve implements Curve {
+public abstract class BitmapCurve implements Curve {
   private Canvas mTailCanvas;
   private BitmapCurveMane mMane;
 

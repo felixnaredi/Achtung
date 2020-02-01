@@ -1,8 +1,9 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.curve;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
+import chalmers.dat055.achtung.CountToggler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;

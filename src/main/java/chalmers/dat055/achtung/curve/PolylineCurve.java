@@ -1,14 +1,15 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.curve;
 
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import chalmers.dat055.achtung.CountToggler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 
-class PolylineCurve extends CurveBase {
+public class PolylineCurve extends CurveBase {
   private Paint mColor;
   private Stack<Stack<Double>> mPoints;
   private int mStrokeWidth;

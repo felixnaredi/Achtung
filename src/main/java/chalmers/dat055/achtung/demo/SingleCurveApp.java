@@ -1,7 +1,10 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.demo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import chalmers.dat055.achtung.KeyServer;
+import chalmers.dat055.achtung.curve.Curve;
+import chalmers.dat055.achtung.curve.PolylineCurve;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;

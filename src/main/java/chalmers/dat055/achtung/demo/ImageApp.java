@@ -1,4 +1,4 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.demo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

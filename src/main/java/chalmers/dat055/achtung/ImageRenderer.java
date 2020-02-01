@@ -10,7 +10,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-class ImageRenderer {
+public class ImageRenderer {
   public static Image drawImage(int width, int height, Consumer<GraphicsContext> drawFunction) {
     Canvas canvas = new Canvas(width, height);
     drawFunction.accept(canvas.getGraphicsContext2D());
@@ -27,6 +27,7 @@ class ImageRenderer {
   public static Image fromCanvas(Canvas canvas) {
     int width = (int) canvas.getWidth();
     int height = (int) canvas.getHeight();
+
     double x = canvas.getLayoutX();
     double y = canvas.getLayoutY();
     

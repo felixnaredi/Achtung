@@ -1,6 +1,8 @@
-package chalmers.dat055.achtung;
+package chalmers.dat055.achtung.curve;
 
-interface Curve extends Actor {
+import chalmers.dat055.achtung.Actor;
+
+public interface Curve extends Actor {
   public void addPitch(double rad);
   public void setPosition(double x, double y);
   public void setSpeed(double speed);

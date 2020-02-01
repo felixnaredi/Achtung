@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-class KeyServer {
+public class KeyServer {
   private Set<KeyCode> mKeysHold;
   private Set<KeyCode> mKeysPressed;
 
