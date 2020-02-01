@@ -14,7 +14,7 @@ abstract class BitmapCurve implements Curve {
     mTailCanvas = new Canvas(width, height);
 
     BitmapCurve self = this;
-    mMane = new BitmapCurveMane(50) {
+    mMane = new BitmapCurveMane(4) {
       @Override
       public Image makeHeadImage(int width) {
         return self.makeHeadImage(width);
