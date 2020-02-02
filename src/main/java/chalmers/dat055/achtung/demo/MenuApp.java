@@ -2,7 +2,6 @@ package chalmers.dat055.achtung.demo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import chalmers.dat055.achtung.ImageRenderer;
@@ -31,7 +30,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class MenuApp extends Application {
   private static Canvas makeMenuItem(String title, Consumer<Void> trigger) {
@@ -114,9 +112,6 @@ public class MenuApp extends Application {
         curve.addPitch(-0.08);
       }
     });
-
-    AtomicBoolean windowWillClose = new AtomicBoolean(false);
-    stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, (x) -> windowWillClose.set(true));
 
     menuBox.setAlignment(Pos.CENTER);
 
