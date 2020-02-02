@@ -1,23 +1,25 @@
 package chalmers.dat055.achtung.demo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
+import java.util.function.Consumer;
 
 import chalmers.dat055.achtung.ImageRenderer;
 import chalmers.dat055.achtung.KeyServer;
+import chalmers.dat055.achtung.MenuItemListener;
 import chalmers.dat055.achtung.curve.BitmapCurve;
 import chalmers.dat055.achtung.curve.Curve;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -27,10 +29,66 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class MenuApp extends Application {
+  private static Canvas makeMenuItem(String title, Consumer<Void> trigger) {
+    Canvas c = new Canvas(132, 32);
+    GraphicsContext g = c.getGraphicsContext2D();
+    g.setFont(new Font(28));
+
+    if (trigger == null) {
+      g.setStroke(Color.GREY);
+      g.strokeText(title, 0, 25);
+    } else {
+      g.setStroke(Color.RED);
+      g.strokeText(title, 0, 25);
+
+      new MenuItemListener() {
+        @Override
+        public void onTrigger(InputEvent event) {
+          Platform.runLater(() -> {
+            g.clearRect(0, 0, c.getWidth(), c.getHeight());
+            g.setFill(Color.RED);
+            g.setStroke(Color.YELLOW);
+            g.fillText(title, 0, 25);
+            g.strokeText(title, 0, 25);
+          });
+          trigger.accept(null);
+        }
+
+        @Override
+        public void onRelease(InputEvent event) {          
+          onFocus(event);
+        }
+
+        @Override
+        public void onLeave(InputEvent event) {
+          Platform.runLater(() -> {
+            g.clearRect(0, 0, c.getWidth(), c.getHeight());
+            g.setStroke(Color.RED);
+            g.strokeText(title, 0, 25);
+          });
+        }
+
+        @Override
+        public void onFocus(InputEvent event) {
+          Platform.runLater(() -> {
+            g.clearRect(0, 0, c.getWidth(), c.getHeight());
+            g.setFill(Color.YELLOW);
+            g.setStroke(Color.RED);
+            g.fillText(title, 0, 25);
+            g.strokeText(title, 0, 25);
+          });
+        }
+      }.setCanvas(c);
+    }
+
+    return c;
+  }
+
   @Override
   public void start(Stage stage) {
     List<Curve> activeCurves = new ArrayList<>();
@@ -63,10 +121,6 @@ public class MenuApp extends Application {
     menuBox.setAlignment(Pos.CENTER);
 
     scene.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
-      // Curve curve = new BitmapCurve(
-      //     Color.color(0.5, 1.0, 0.5, 1.0), (int)stage.getWidth(), (int)stage.getHeight());
-      // Curve curve = new PolylineCurve(Color.color(0.0, 1.0, 0.5, 0.45));
-
       Curve curve = new BitmapCurve(scene.getWidth(), scene.getHeight()) {
         @Override
         public Image makeHeadImage(int width) {
@@ -85,24 +139,10 @@ public class MenuApp extends Application {
     });
 
     menuBox.getChildren().addAll(
-        Arrays.asList("Start Game", "Settings", "Exit")
-            .stream()
-            .map((s) -> {
-              Label l = new Label(s);
-              l.setTextFill(Color.BEIGE);
-              l.addEventFilter(MouseEvent.MOUSE_ENTERED, (e) -> {
-                l.setTextFill(Color.RED);
-                l.cursorProperty().set(Cursor.HAND);
-              });
-              l.addEventFilter(MouseEvent.MOUSE_PRESSED, (e) -> {
-                l.setTextFill(Color.YELLOW);
-                l.cursorProperty().set(Cursor.HAND);
-              });
-              l.addEventFilter(MouseEvent.MOUSE_EXITED, (e) -> l.setTextFill(Color.BEIGE));
-              l.addEventFilter(MouseEvent.MOUSE_RELEASED, (e) -> l.setTextFill(Color.RED));
-              return l;
-            })
-            .collect(Collectors.toList()));
+        MenuApp.makeMenuItem("Start Game", (x) -> System.out.println("Get ready to RUMBLE!")),
+        MenuApp.makeMenuItem("Settings", null),
+        MenuApp.makeMenuItem("Lobby", (x) -> System.out.println("Found no lobby")),
+        MenuApp.makeMenuItem("Exit", (x) -> stage.close()));
 
     stage.setScene(scene);
     stage.show();
