@@ -1,0 +1,17 @@
+#vboxLayout {
+    -fx-background-color:#1f4fee;
+    -fx-spacing: 2;
+}
+
+.menuitem {
+    -fx-padding:4;
+    -fx-background-color:red;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: green;
+}
+
+.menuitem:hover {
+    -fx-background-color:yellow;
+    -fx-border-color: purple;
+}

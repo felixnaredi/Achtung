@@ -19,7 +19,7 @@ plugins {
 
 javafx {
     version = "13"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 
@@ -38,4 +38,4 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'chalmers.dat055.achtung.demo.MenuApp'
+mainClassName = 'chalmers.dat055.achtung.demo.FXMLTestApp'
