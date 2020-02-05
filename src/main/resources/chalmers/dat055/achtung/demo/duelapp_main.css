@@ -10,18 +10,33 @@
     -fx-border-width: 0 0 3 0;
 }
 
-.menuItem {
+.clickable-menu-item-label {
     -fx-font-family: monospace;
     -fx-font-size: 18;
     -fx-text-fill: coral;
     -fx-cursor: hand;
 }
 
-.menuItem:hover {
+.clickable-menu-item-label:hover {
     -fx-text-fill: #ffd900
 }
 
-.menuItem:pressed {
+.clickable-menu-item-label:pressed {
     -fx-text-fill: #fff8d0
 }
 
+.clickable-menu-item-label:disabled {
+    -fx-text-fill: #aaaaaa;
+}
+
+.static-menu-item-label {
+    -fx-font-family: monospace;
+    -fx-font-size: 18;
+    -fx-text-fill: #000000;
+}
+
+.menu-item-section-divider {
+    -fx-font-family: monospace;
+    -fx-font-size: 18;
+    -fx-text-fill: #224358;
+}

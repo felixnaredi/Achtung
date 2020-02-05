@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.shape.Rectangle?>
 
 <VBox
     xmlns="http://javafx.com/javafx/13" 
@@ -16,18 +17,25 @@
 
     <HBox
         fx:id="menuLayout">
-        
+
         <Label
-            styleClass="menuItem"
+            fx:id="playButton"
+            styleClass="clickable-menu-item-label"
             text="Start"/>
+
+        <Label
+            fx:id="pauseButton"
+            styleClass="clickable-menu-item-label"
+            disable="true"
+            text="Pause"/>
+
+        <Label 
+            styleClass="menu-item-section-divider"
+            text="|"/>
         
         <Label
-            styleClass="menuItem"
-            text="Some"/>
-        
-        <Label
-            styleClass="menuItem"
-            text="Option"/>
+            styleClass="static-menu-item-label"
+            text="Players:"/>
     </HBox>
 
 </VBox>
