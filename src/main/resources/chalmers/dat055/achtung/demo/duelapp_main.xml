@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox
+    xmlns="http://javafx.com/javafx/13" 
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:id="rootLayout"
+    fx:controller="chalmers.dat055.achtung.demo.DuelController"
+    alignment="TOP_CENTER"
+    minHeight="Infinity"
+    minWidth="Infinity"
+    stylesheets="@duelapp_main.css">
+
+    <HBox
+        fx:id="menuLayout">
+        
+        <Label
+            styleClass="menuItem"
+            text="Start"/>
+        
+        <Label
+            styleClass="menuItem"
+            text="Some"/>
+        
+        <Label
+            styleClass="menuItem"
+            text="Option"/>
+    </HBox>
+
+</VBox>

@@ -1,0 +1,27 @@
+#rootLayout {
+    -fx-background-color: #303030;
+}
+
+#menuLayout {
+    -fx-background-color: #335972;
+    -fx-spacing: 25;
+    -fx-padding: 4 10 4 10;
+    -fx-border-color: #224358;
+    -fx-border-width: 0 0 3 0;
+}
+
+.menuItem {
+    -fx-font-family: monospace;
+    -fx-font-size: 18;
+    -fx-text-fill: coral;
+    -fx-cursor: hand;
+}
+
+.menuItem:hover {
+    -fx-text-fill: #ffd900
+}
+
+.menuItem:pressed {
+    -fx-text-fill: #fff8d0
+}
+
