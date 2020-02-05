@@ -2,8 +2,9 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.shape.Rectangle?>
+<?import chalmers.dat055.achtung.gui.PlayPauseButton?>
 
 <VBox
     xmlns="http://javafx.com/javafx/13" 
@@ -19,15 +20,16 @@
         fx:id="menuLayout">
 
         <Label
-            fx:id="playButton"
+            fx:id="mStartGameLabel"
             styleClass="clickable-menu-item-label"
             text="Start"/>
 
-        <Label
-            fx:id="pauseButton"
-            styleClass="clickable-menu-item-label"
-            disable="true"
-            text="Pause"/>
+        <StackPane>
+            <PlayPauseButton
+                fx:id="mPlayPauseButton"
+                width="18"
+                height="18"/>
+        </StackPane>
 
         <Label 
             styleClass="menu-item-section-divider"
