@@ -41,6 +41,11 @@
     -fx-text-fill: #224358;
 }
 
+#mPlayPauseButton {
+    -fx-background-color: #757575;
+}
+
 #mPlayPauseButton:hover {
     -fx-cursor: hand;
+    -fx-background-color: #558d5f;
 }
