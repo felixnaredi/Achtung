@@ -10,7 +10,6 @@ import javafx.css.Styleable;
 import javafx.css.StyleablePropertyFactory;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class PlayPauseButton extends Canvas {
@@ -21,8 +20,7 @@ public class PlayPauseButton extends Canvas {
     super();
 
     mBackgroundColor = new SimplePaintProperty<>("-fx-background-color");
-    setBackgroundColor(Color.BLACK);
-    backgroundColorProperty().addListener((paint) -> draw());
+    backgroundColorProperty().addListener((obs, ov, nv) -> draw());
   }
 
   private static final StyleablePropertyFactory<PlayPauseButton> FACTORY =

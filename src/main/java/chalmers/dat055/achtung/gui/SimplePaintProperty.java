@@ -11,6 +11,7 @@ import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.css.converter.PaintConverter;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /* 
@@ -19,17 +20,28 @@ import javafx.scene.paint.Paint;
  *   class.
  */
 
+/**
+ * A property of Paint that can be customized by css.
+ * 
+ * @param <T> Class of the owner object.
+ */
 public class SimplePaintProperty<T extends Styleable> {
   private StyleableProperty<Paint[]> mPaintRef;
   private ObservableValue<Paint> mPaintProperty;
   private CssMetaData<T, Paint[]> mCssMetaData;
 
+  /**
+   * Initializes an SimplePaintProperty.
+   * 
+   * @param property The css identifier name.
+   */
   @SuppressWarnings("unchecked")
   public SimplePaintProperty(String property) {
     mCssMetaData =
         new CssMetaData<T, Paint[]>(property, PaintConverter.SequenceConverter.getInstance()) {
           @Override
           public boolean isSettable(Styleable styleable) {
+            // TODO: Not sure how safe it is only to return 'true'.
             return true;
           }
 
@@ -40,6 +52,11 @@ public class SimplePaintProperty<T extends Styleable> {
         };
 
     mPaintRef = new SimpleStyleableObjectProperty<>(mCssMetaData);
+
+    // 
+    // Use the cast of the observable paint reference in order to create a wrapper for a 
+    // ObervableValue<Paint> object to create the paint property.
+    //
 
     ObservableValue<Paint[]> ref = (ObservableValue<Paint[]>)mPaintRef;
 
@@ -80,6 +97,9 @@ public class SimplePaintProperty<T extends Styleable> {
         return get();
       }
     };
+
+    // Set default color.
+    set(Color.BLACK);
   }
 
   public CssMetaData<T, Paint[]> getCssMetaData() { return mCssMetaData; }
