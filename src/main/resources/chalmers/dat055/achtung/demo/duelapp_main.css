@@ -50,10 +50,10 @@
 
 #mPlayPauseButton:hover {
     -fx-cursor: hand;
-    -achtung-background-color: #a5a5a5;
-    -achtung-stroke-color: #474747;
-    -achtung-icon-fill-color: #949494;
-    -achtung-icon-stroke-color: #474747;
+    -achtung-background-color: linear-gradient(from 50% 10% to 50% 90%, #5e5e5e, #979797);
+    -achtung-stroke-color: linear-gradient(from 50% 10% to 50% 90%, #979797, #3f3f3f);;
+    -achtung-icon-fill-color: linear-gradient(from 50% 10% to 50% 90%, #424242, #353535);
+    -achtung-icon-stroke-color: transparent;
 }
 
 #mPlayPauseButton:disabled {

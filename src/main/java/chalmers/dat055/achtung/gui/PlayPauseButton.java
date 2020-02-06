@@ -52,44 +52,66 @@ public class PlayPauseButton extends Canvas {
     return Collections.unmodifiableList(temp);
   }
 
+  private static double ICON_SCALE_FACTOR = 0.73;
+
   private void drawPlayIcon() {
+    GraphicsContext g = getGraphicsContext2D();
+    g.save();
+
+    double[] xPoints = {1.0, -0.5, -0.5};
+    double[] yPoints = {0.0, 0.8660254037844388, -0.8660254037844388};
     double w = getWidth();
     double h = getHeight();
+    
+    g.setFill(getIconFillColor());
+    g.setStroke(getIconStrokeColor());
+    g.setLineWidth(2 / (w * ICON_SCALE_FACTOR));
+    g.scale(w / 2, h / 2);
+    g.translate(1, 1);
+    g.scale(ICON_SCALE_FACTOR, ICON_SCALE_FACTOR);
 
-    getGraphicsContext2D().fillPolygon(
-        new double[] {(1.0 * w + w) / 2, (-0.5 * w + w) / 2, (-0.5 * w + w) / 2},
-        new double[] {
-            (0.0 * h + h) / 2, (0.8660254037844388 * h + h) / 2, (-0.8660254037844384 * h + h) / 2},
-        3);
-    getGraphicsContext2D().strokePolygon(
-        new double[] {(1.0 * w + w) / 2, (-0.5 * w + w) / 2, (-0.5 * w + w) / 2},
-        new double[] {
-            (0.0 * h + h) / 2, (0.8660254037844388 * h + h) / 2, (-0.8660254037844384 * h + h) / 2},
-        3);
+    getGraphicsContext2D().fillPolygon(xPoints, yPoints, 3);
+    getGraphicsContext2D().strokePolygon(xPoints, yPoints, 3);
+
+    g.restore();
   }
 
   private void drawPauseIcon() {
+    GraphicsContext g = getGraphicsContext2D();
+    g.save();
+
     double w = getWidth();
     double h = getHeight();
 
-    GraphicsContext g = getGraphicsContext2D();
-    g.fillRect(w / 7, h * 0.125, 2 * w / 7, h * 0.75);
-    g.fillRect(4 * w / 7, h * 0.125, 2 * w / 7, h * 0.75);
-    g.strokeRect(w / 7, h * 0.125, 2 * w / 7, h * 0.75);
-    g.strokeRect(4 * w / 7, h * 0.125, 2 * w / 7, h * 0.75);
+    g.setFill(getIconFillColor());
+    g.setStroke(getIconStrokeColor());
+    g.setLineWidth(1.0 / (w * ICON_SCALE_FACTOR));
+    g.scale(w, h);
+    g.translate(0.125, 0.125);
+    g.scale(ICON_SCALE_FACTOR, ICON_SCALE_FACTOR);
+
+    g.fillRect(1.0 / 7.0, 0.125, 2.0 / 7.0, 0.75);
+    g.strokeRect(1.0 / 7.0, 0.125, 2.0 / 7.0, 0.75);
+
+    g.fillRect(4.0 / 7.0, 0.125, 2.0 / 7.0, 0.75);
+    g.strokeRect(4.0 / 7.0, 0.125, 2.0 / 7.0, 0.75);
+
+    g.restore();
   }
 
   private void draw() {
     GraphicsContext g = getGraphicsContext2D();
     g.clearRect(0, 0, getWidth(), getHeight());
-    
+
     g.setFill(getBackgroundColor());
     g.setStroke(getStrokeColor());
-    g.fillOval(0, 0, getWidth(), getHeight());
-    g.strokeOval(0, 0, getWidth(), getHeight());
 
-    g.setFill(getIconFillColor());
-    g.setStroke(getIconStrokeColor());
+    double lw = g.getLineWidth();
+    double w = getWidth() - lw;
+    double h = getHeight() - lw;
+    g.fillOval(lw / 2, lw / 2, w, h);
+    g.strokeOval(lw / 2, lw / 2, w, h);
+
     if (mIsPaused) {
       drawPauseIcon();
     } else {
