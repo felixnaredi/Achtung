@@ -6,11 +6,8 @@ import java.util.List;
 
 import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
-import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
-import javafx.css.StyleableProperty;
 import javafx.css.StyleablePropertyFactory;
-import javafx.css.converter.PaintConverter;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -18,10 +15,12 @@ import javafx.scene.paint.Paint;
 
 public class PlayPauseButton extends Canvas {
   private boolean mIsPaused;
+  private SimplePaintProperty<PlayPauseButton> mBackgroundColor;
 
   public PlayPauseButton() {
     super();
 
+    mBackgroundColor = new SimplePaintProperty<>("-fx-background-color");
     setBackgroundColor(Color.BLACK);
     backgroundColorProperty().addListener((paint) -> draw());
   }
@@ -29,45 +28,16 @@ public class PlayPauseButton extends Canvas {
   private static final StyleablePropertyFactory<PlayPauseButton> FACTORY =
       new StyleablePropertyFactory<>(Canvas.getClassCssMetaData());
 
-  private static final CssMetaData<PlayPauseButton, Paint[]> BACKGROUND_COLOR =
-      new CssMetaData<PlayPauseButton, Paint[]>("-fx-background-color",
-                                                PaintConverter.SequenceConverter.getInstance(),
-                                                new Paint[] {Color.BLACK}) {
-        @Override
-        public boolean isSettable(PlayPauseButton node) {
-          return true;
-        }
-
-        @Override
-        public StyleableProperty<Paint[]> getStyleableProperty(PlayPauseButton node) {
-          return node.mBackgroundColor;
-        }
-      };
-
-  private final StyleableProperty<Paint[]> mBackgroundColor =
-      new SimpleStyleableObjectProperty<>(BACKGROUND_COLOR, this, "backgroundColor");
-
-  public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+  @Override
+  public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
     List<CssMetaData<? extends Styleable, ?>> temp = new ArrayList<>(FACTORY.getCssMetaData());
-    temp.add(BACKGROUND_COLOR);
+    temp.add(mBackgroundColor.getCssMetaData());
     return Collections.unmodifiableList(temp);
   }
 
-  @Override
-  public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-    return PlayPauseButton.getClassCssMetaData();
-  }
-
-  // Typical JavaFX property implementation
-  public ObservableValue<Paint[]> backgroundColorProperty() {
-    return (ObservableValue<Paint[]>)mBackgroundColor;
-  }
-
-  public final Paint getBackgroundColor() { return mBackgroundColor.getValue()[0]; }
-  
-  public final void setBackgroundColor(Paint paint) {
-    mBackgroundColor.setValue(new Paint[] {paint});
-  }
+  public ObservableValue<Paint> backgroundColorProperty() { return mBackgroundColor.property(); }
+  public final Paint getBackgroundColor() { return mBackgroundColor.get(); }
+  public final void setBackgroundColor(Paint paint) { mBackgroundColor.set(paint); }
 
   private void drawPlayIcon() {
     double w = getWidth();
@@ -102,6 +72,9 @@ public class PlayPauseButton extends Canvas {
   }
 
   public void setPaused(boolean value) {
+    if (mIsPaused == value) {
+      return;
+    }
     mIsPaused = value;
     draw();
   }
