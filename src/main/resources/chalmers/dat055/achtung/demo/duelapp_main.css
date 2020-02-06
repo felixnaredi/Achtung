@@ -42,10 +42,23 @@
 }
 
 #mPlayPauseButton {
-    -fx-background-color: #757575;
+    -achtung-background-color: #00000000;
+    -achtung-stroke-color: #a5a5a5;
+    -achtung-icon-fill-color: #a5a5a5;
+    -achtung-icon-stroke-color: #00000000;
 }
 
 #mPlayPauseButton:hover {
     -fx-cursor: hand;
-    -fx-background-color: #558d5f;
+    -achtung-background-color: #a5a5a5;
+    -achtung-stroke-color: #474747;
+    -achtung-icon-fill-color: #949494;
+    -achtung-icon-stroke-color: #474747;
+}
+
+#mPlayPauseButton:disabled {
+    -achtung-background-color: #00000000;
+    -achtung-stroke-color: #757575;
+    -achtung-icon-fill-color: #00000000;
+    -achtung-icon-stroke-color: #757575;
 }

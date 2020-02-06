@@ -15,6 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /* 
+ * TODO: This class was probably a waste of time and should be considered to be removed.
+ */
+
+/* 
  * TODO:
  *   This implementation can currently only add css meta data to an object and not static to the
  *   class.
@@ -38,7 +42,7 @@ public class SimplePaintProperty<T extends Styleable> {
   @SuppressWarnings("unchecked")
   public SimplePaintProperty(String property) {
     mCssMetaData =
-        new CssMetaData<T, Paint[]>(property, PaintConverter.SequenceConverter.getInstance()) {
+        new CssMetaData<T, Paint[]>(property, PaintConverter.SequenceConverter.getInstance(), new Color[] {Color.BLACK}) {
           @Override
           public boolean isSettable(Styleable styleable) {
             // TODO: Not sure how safe it is only to return 'true'.
